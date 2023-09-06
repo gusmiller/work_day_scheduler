@@ -24,7 +24,68 @@
  * Main jQuery entry call. Wrapped after the page load process has been completed and document can be manipulated safely. 
  * It contains all functions available.
  */
-
 $(document).ready(function () {
-  $('#currentDay').text(dayjs().format('MMMM DD, YYYY'));
+
+
+
+  /**
+   * Initialize the page
+   */
+  function init() {
+
+    var newTimeBlock = $('#newTime06').clone();
+    var currentHour = dayjs().format('HH') // This will 
+
+    console.log(dayjs().format('HH'));
+
+    for (var hour = 6; hour < 21; hour++) {
+
+      var insertLocation = addLeadingZero(hour - 1);
+      var formattedHour = addLeadingZero(hour);
+      var time = formattedHour + ":00";
+      var newTimeFormatted = "newTime" + formattedHour;
+
+      // Work on disabling items and setting up the colors of the time blocks. Note: this will have to be 
+      // executed once loaded but then it should trigger every hour.
+      var disableItem = " disabled";
+      var statusTimeColor = "past";
+
+      if (+currentHour == hour){
+        statusTimeColor="present";
+        disableItem = "";
+      }else if( hour > +currentHour && hour <= 18){
+        statusTimeColor="future";
+        disableItem = "";
+      }
+
+      if (hour > 6) {
+
+        var htmlCode = '<section id="' + newTimeFormatted + '" class="row time-block ' + statusTimeColor + '">'
+          + '<div class="col-2 col-md-1 hour text-center py-3">' + time + '</div>'
+          + '<textarea class="col-8 col-md-10 description" rows="3"> </textarea>'
+          + '<button type="button" class="btn saveBtn col-2 col-md-1" aria-label="save"'
+          + disableItem + '>'
+          + '<i class="fas fa-save" aria-hidden="true"></i></button></section>'
+
+        $(htmlCode).insertAfter("#newTime" + insertLocation);
+
+        // newTimeBlock.attr("id", newTimeFormatted);
+        // newTimeBlock.children().eq(0).text(time);
+        // newTimeBlock.insertAfter("#newTime" + insertLocation);
+      }else{
+        $('#newItem06').children('button').attr("disabled", true);
+      }
+    }
+
+    $('#currentDay').text(dayjs().format('MMMM DD, YYYY'));
+
+  };
+
+  function addLeadingZero(num) {
+    return num < 10 ? "0" + num : num;
+  }
+
+  init();
+
 })
+
