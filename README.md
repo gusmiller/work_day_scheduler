@@ -69,7 +69,7 @@ The Code Quiz application should welcome the user and offer the option to partic
 
 The layout for the Time-block for the Work Day Schedule is very simple. It is divided in three columns; time, task editor and save button. This layout will repeat for the duration of the wor day; 9am to 5pm, color coded depending whether the day is past, current or future. The layout requires to be updated on a regular basis in order to reflect the time of the day.
 
-Here is the layout of the index.html
+Here is the layout of the index.html<br/>
 <img src="./assets/images/IMG002.png" height="100">
 
 Depending on the availabilty of the time-block user may or may not enter information. For instance, when past, then user cannot enter information.
