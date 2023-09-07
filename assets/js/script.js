@@ -11,6 +11,8 @@
  */
 $(document).ready(function () {
   var tasksRegistry = []; // Declare empty array - this will hold the tasks
+  var startingTime = 9; // Scheduler starting time
+  var endingTime = 19; // Scheduler ending time
 
   /**
    * This function will save the information into the Local Storage. It validates that item doesn't already
@@ -110,12 +112,12 @@ $(document).ready(function () {
         // Re-assign the classes based on the time criteria; some hours are non-working hours, past, current
         // and future hours. Note: requirement does not ask for non-working hours, but I put them for higher
         // visualization of the day
-        if (+hour <= 5 || +hour >= 21) {
+        if (+hour < startingTime || +hour >= endingTime) {
           selectTimeBlock.addClass("nonworking");
         } else if (+currentHour == hour) {
           selectTimeBlock.addClass("present");
           disableItem = "";
-        } else if (hour > +currentHour && hour <= 18) {
+        } else if (hour > +currentHour && hour <= endingTime - 1) {
           selectTimeBlock.addClass("future");
           disableItem = "";
         } else {
@@ -131,15 +133,14 @@ $(document).ready(function () {
    * it would not add; as the next row. Leave for later.
    */
   function init() {
-    var newTimeBlock = $("#newTime05").clone(); // Initial mechanism to create DOM - not successfull
+    var newTimeBlock = $("#timeBlockTemplate").clone(); // Initial mechanism to create DOM - not successfull
 
     var currentHour = dayjs().format("HH"); // This will retrieve the current hour
 
     // Iterate through the hours that would be included in the scheduler. We are using non-working hours
     // only to demonstrate that we can handle them. This runs automatically when document is ready and it
     // will start a timer to refresh when the current hour changes.
-    for (var hour = 5; hour < 23; hour++) {
-      var insertLocation = addLeadingZero(hour - 1); // this is a hack to starting point
+    for (var hour = startingTime; hour < endingTime; hour++) {
       var formattedHour = addLeadingZero(hour); // Intentionally done d
       var time = formattedHour + ":00";
       var newTimeFormatted = "newTime" + formattedHour;
@@ -149,17 +150,17 @@ $(document).ready(function () {
       var disableItem = " disabled";
       var statusTimeColor = "past";
 
-      if (+hour <= 5 || +hour >= 21) {
+      if (+hour < startingTime || +hour >= endingTime) {
         statusTimeColor = "nonworking";
       } else if (+currentHour == hour) {
         statusTimeColor = "present";
         disableItem = "";
-      } else if (hour > +currentHour && hour <= 18) {
+      } else if (hour > +currentHour && hour <= endingTime - 1) {
         statusTimeColor = "future";
         disableItem = "";
       } else {
-        // Uncomment next line to enable data entry on all past timeBlocks. For testing purposes.
-        // disableItem = ""; 
+        //Uncomment next line to enable data entry on all past timeBlocks. For testing purposes.
+        disableItem = "";
       }
 
       // Build HTML code using string and concatenating variables; slick but not the way I would
@@ -174,13 +175,15 @@ $(document).ready(function () {
         "</button>" +
         "</section>";
 
-      $(htmlCode).insertAfter("#newTime" + insertLocation);
+      //$(htmlCode).insertAfter("#newTime" + insertLocation);
+      $(htmlCode).insertBefore("#anchor"); // Inserting before the anchor for the order of time
+      //$(htmlCode).append("#timeBlockArea")
 
       // The following code, is kept for future implementations. It was intended to work in combination with
       // the cloning on line #62.
       //
-      // newTimeBlock.attr("id", newTimeFormatted);
-      // newTimeBlock.children().eq(0).text(time);
+      // newTimeBlock.attr("id", newTimeFormatted); // Change id to unique
+      // newTimeBlock.children().eq(0).text(time); // Time to display
       // newTimeBlock.insertAfter("#newTime" + insertLocation);
     }
 
