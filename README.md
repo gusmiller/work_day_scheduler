@@ -24,9 +24,9 @@
 
 ## Module 05 Challenge: Third Party APIs
 
-The challenge this week is to create an application that enables users to participate on a Quiz Game. The application will give user a set time of 60 seconds to complete the task. No worries, if you fail you can try again and you miss them all, we will give you some time to deal with your emotions and encourage you to try again.
+Create a simple calendar application that allows a user to save events for each hour of a typical working day (9am&ndash;5pm) by modifying starter code. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery. The Work Scheduler has three different stages; past, current and future. As the days rolls, the color of the time-block will change based on the criteria just mentioned.
 
-<img src="./documents/images/CQC-001.png" height="750">
+<img src="./assets/images/IMG001.png" height="750">
 
 <!-- Source Section -->
 ## Source code
