@@ -92,28 +92,6 @@ The Work Day Schedule was relatively simple to code, the concept was clear and t
 >
 > - Enable or disable editor based on the status of the time-block; past, current or future.
 
-<!-- ROADMAP -->
-
-## Roadmap
-
-In the process of developing this application I have been using more and more the git commands and github features, such <strong>issues and wiki</strong>. Please visit my [Code Quiz Wiki](https://github.com/gusmiller/Code-Quiz-App/wiki) This will add great value to my resume and keep me sharp using this tool
-
-- [ ] Dev-001 Build index page
-     - [ ] Dev-001 Styling CSS Files
-     - [ ] Dev-001 Questions flow
-     - [ ] User Penalize for wrong answers
-- [ ] Err-001 Page does not load
-- [ ] Dev-002 Scores are to be shown
-     - [ ] Dev-002 Build Score page
-     - [ ] Dev-002 Add Scores Form
-     - [ ] Dev-002 Complete the script
-- [ ] Dev-003 Quiz not advancing (bug)
-- [ ] Dev-004 Create README (documentation)
-- [ ] Err-002 Link to scoreboard not showing
-
-See the [open issues](https://github.com/gusmiller/Code-Quiz-App/issues) for a full list of proposed features (and known issues).
-Note: last two issue have been intentionaly left open for graders to see that I am using this feature.
-
 <!-- LICENSE Section -->
 
 ## License
@@ -126,15 +104,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 In case you have any questions or would like me to help you in your IT needs, you may contact me at - gustavo.miller@miller-hs.com
 
-Project Link: [https://gusmiller.github.io/Code-Quiz-App/](https://gusmiller.github.io/Code-Quiz-App/)
+Project Link: [https://gusmiller.github.io/work_day_scheduler/](https://gusmiller.github.io/work_day_scheduler/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Error Handling
-
-There is no errr handling but there is a failed Quiz Message
-
-<img src="./documents/images/CQC-007.png" height="550">
 
 ---
 
