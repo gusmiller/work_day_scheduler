@@ -1,4 +1,4 @@
-/*!
+/**
  * Carleton Bootcamp - 2023
  * Copyright 2023 Gustavo Miller
  * Licensed under MIT
@@ -10,12 +10,76 @@
  * It contains all functions available.
  */
 $(document).ready(function () {
+  var tasksRegistry = []; // Declare empty array - this will hold the tasks
 
   /**
-   * 
+   * This function will save the information into the Local Storage. It validates that item doesn't already
+   * exist and if it does then it updates data. We do the search using the timeBlock id, which acts as a
+   * primary key
    */
-  function retrieveData(){
+  function saveInformation() {
+    var timeBlock = $(this).parent(); // Retrieve from the button the parent element -to retrieve key
 
+    // Build score object. Retrieve time-Block Primary ID key and the textarea value
+    var data = {
+      key: timeBlock.attr("id"),
+      task: timeBlock.children("textarea").val(),
+    };
+
+    // Attempt to find the key in array
+    var index = searchData(data.key);
+
+    if (index == null) {
+      tasksRegistry.push(data); // Add new object to the local storage
+    } else {
+      tasksRegistry[index].task = data.task;
+    }
+
+    // Window: localStorage property - data has no expiration time
+    localStorage.setItem("schedulerTasks", JSON.stringify(tasksRegistry));
+
+  }
+
+  /**
+   * This function will validate the task to save already exists; which means that we are 
+   * updating the task. In case there is no records then it will return null.
+   * @param {*} key 
+   * @returns index position or null
+   */
+  function searchData(key) {
+    if (tasksRegistry.length != 0) {
+      for (i = 0; i <= tasksRegistry.length - 1; i++) {
+        if (tasksRegistry[i].key == key) {
+          return i;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * This function will retrieve from the Local Storage the tasks assigned to the current Work Day Scheduler.
+   * The function returns a populates -or empty, array that may contain the tasks stored.
+   */
+  function retrieveData() {
+    var tasks = JSON.parse(localStorage.getItem("schedulerTasks"));
+
+    if (tasks !== null) {
+      // Validate whether we have a single item or an array of objects
+      if (
+        Object.prototype.toString.call(tasks) !==
+        "[object Array]"
+      ) {
+        tasksRegistry.push(tasks); // Initialize the tasks array
+      } else {
+        for (i = 0; i <= tasks.length - 1; i++) {
+          tasksRegistry.push(tasks[i]); // Add tasks into array
+
+          // Add task saved into the Day Scheduler
+          $("#" + tasks[i].key).children("textarea").val(tasks[i].task);
+        }
+      }
+    }
   }
 
   /**
@@ -27,36 +91,37 @@ $(document).ready(function () {
     var currentHour = dayjs().format("HH"); // This will retrieve the current hour
     var newTimeFormatted = "newTime" + currentHour;
 
-    var $parent = $('#timeBlockArea');
+    var $parent = $("#timeBlockArea");
 
     // Iterate through all elements in the timeBlockArea. I had  used a selector like this $(#timeBlockA > Section)
     // but I did not have the accessibility I was hoping for. This method works fine
     $parent.children().each(function () {
-
-      if (this.id != "newTime04") { // Avoid this element -it is hidden.
+      if (this.id != "newTime04") {
+        // Avoid this element -it is hidden.
 
         var selectTimeBlock = $("#" + this.id); // Build the id in string
         var text = selectTimeBlock.children().eq(0).text(); // Grab the time from children element
         var hour = parseInt(text.replace(":00", "")); // Remove the minutes format and convert into integer
 
-        selectTimeBlock.removeClass("past present future nonworking"); // Get rid of classes
+        selectTimeBlock.removeClass(
+          "past present future nonworking"
+        ); // Get rid of classes
 
-        // Re-assign the classes based on the time criteria; some hours are non-working hours, past, current 
+        // Re-assign the classes based on the time criteria; some hours are non-working hours, past, current
         // and future hours. Note: requirement does not ask for non-working hours, but I put them for higher
         // visualization of the day
         if (+hour <= 5 || +hour >= 21) {
-          selectTimeBlock.addClass("nonworking")
+          selectTimeBlock.addClass("nonworking");
         } else if (+currentHour == hour) {
-          selectTimeBlock.addClass("present")
+          selectTimeBlock.addClass("present");
           disableItem = "";
         } else if (hour > +currentHour && hour <= 18) {
-          selectTimeBlock.addClass("future")
+          selectTimeBlock.addClass("future");
           disableItem = "";
         } else {
-          selectTimeBlock.addClass("past")
+          selectTimeBlock.addClass("past");
         }
       }
-
     });
   }
 
@@ -92,21 +157,26 @@ $(document).ready(function () {
       } else if (hour > +currentHour && hour <= 18) {
         statusTimeColor = "future";
         disableItem = "";
+      } else {
+        // Uncomment next line to enable data entry on all past timeBlocks. For testing purposes.
+        // disableItem = ""; 
       }
 
-      // Build HTML code using string and concatenating variables; slick but not the way I would 
-      // like it. Line #62 contains the clone I had in mind, but was not implemented. Kept code for 
+      // Build HTML code using string and concatenating variables; slick but not the way I would
+      // like it. Line #62 contains the clone I had in mind, but was not implemented. Kept code for
       // future implementations.
       var htmlCode =
         '<section id="' + newTimeFormatted + '" class="row time-block ' + statusTimeColor + '">' +
         '<div class="col-2 col-md-1 hour text-center py-3">' + time + "</div>" +
-        '<textarea class="col-8 col-md-10 description" rows="3"> </textarea>' +
+        '<textarea class="col-8 col-md-10 description" rows="3" ' + disableItem + "> </textarea>" +
         '<button type="button" class="btn saveBtn col-2 col-md-1" aria-label="save"' + disableItem + ">" +
-        '<i class="fas fa-save" aria-hidden="true"></i></button></section>';
+        '<i class="fas fa-save" aria-hidden="true"></i>' +
+        "</button>" +
+        "</section>";
 
       $(htmlCode).insertAfter("#newTime" + insertLocation);
 
-      // The following code, is kept for future implementations. It was intended to work in combination with 
+      // The following code, is kept for future implementations. It was intended to work in combination with
       // the cloning on line #62.
       //
       // newTimeBlock.attr("id", newTimeFormatted);
@@ -119,6 +189,9 @@ $(document).ready(function () {
 
     //Set an interval of 30 minutes to run this function
     setInterval(validateCurrent, 60 * 1000);
+    retrieveData(); // This will call the function that retrieves data from LocalStorage
+
+    $("button").on("click", saveInformation);
   }
 
   /**
