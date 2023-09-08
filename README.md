@@ -1,13 +1,13 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-
 <a id="readme-top" name="readme-top"></a>
 
+
 <p align="center">
-    <img src="./resource/images/carleton-u-logo.jpg" height="250">
+    <img src="./assets/images/carleton-u-logo.jpg" height="250">
 </p>
 
 <p align="center">
-    <a href="">
+    <a href="https://bootcamp.carleton.ca/">
         <img alt="Carleton University" src="https://img.shields.io/static/v1.svg?label=bootcamp&message=Carleton&color=blue" /></a>
     <a href="" >
         <img alt="JavaScript - Functions" src="https://img.shields.io/static/v1.svg?label=JavaScripts&message=functions&color=red" /></a>
@@ -99,7 +99,8 @@ The Work Day Schedule was relatively simple to code, the concept was clear and t
 - [ X ] Folder Structure
 - [ X ] Styling
 - [ X ] Index Page
-- [ X ] Build logic
+- [ X ] Build logic - JavaScripts
+- [ X ] Write Technical and User Documentation
 
 See the [open issues](https://github.com/gusmiller/work_day_scheduler/issues) for a full list of proposed features (and known issues). Note: Issues found have been left <strong>open</strong> on purpose for grading purposes.
 
@@ -118,5 +119,10 @@ Project Link: [https://gusmiller.github.io/work_day_scheduler/](https://gusmille
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
 
 © 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved. Developed by Gustavo Miller
