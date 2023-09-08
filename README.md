@@ -113,15 +113,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 In case you have any questions or would like me to help you in your IT needs, you may contact me at - gustavo.miller@miller-hs.com
 
-Project Link: [https://gusmiller.github.io/work_day_scheduler/](https://gusmiller.github.io/work_day_scheduler/)
+Project Link: [https://gusmiller.github.io/work_day_scheduler/]([workscheduler-url])
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
+© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved. Developed by Gustavo Miller
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-
-© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved. Developed by Gustavo Miller
+[workscheduler-url]: https://gusmiller.github.io/work_day_scheduler/
