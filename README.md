@@ -65,7 +65,7 @@ The Code Quiz application should welcome the user and offer the option to partic
     <li>Saved events persist</li>
 </ul>
 
-# Quiz - Time-Block design
+# Time-Block design
 
 The layout for the Time-block for the Work Day Schedule is very simple. It is divided in three columns; time, task editor and save button. This layout will repeat for the duration of the wor day; 9am to 5pm, color coded depending whether the day is past, current or future. The layout requires to be updated on a regular basis in order to reflect the time of the day.
 
@@ -84,15 +84,24 @@ The Work Day Schedule was relatively simple to code, the concept was clear and t
 
 > **Note**: Parameters required in the process are as follow:
 >
-> - Validate time block is available.
+> - Validate time block is implemented.
 >
 > - Validate time and format time-blocks accordingly.
 >
-> - Retrieve localstorage information.
+> - Retrieve information from localstorage to make data persist.
 >
 > - Enable or disable editor based on the status of the time-block; past, current or future.
 
 <!-- LICENSE Section -->
+
+## Roadmap
+
+- [ X ] Folder Structure
+- [ X ] Styling
+- [ X ] Index Page
+- [ X ] Build logic
+
+See the [open issues](https://github.com/gusmiller/work_day_scheduler/issues) for a full list of proposed features (and known issues). Note: Issues found have been left <strong>open</strong> on purpose for grading purposes.
 
 ## License
 
