@@ -85,22 +85,21 @@ The Work Day Schedule was relatively simple to code, the concept was clear and t
 > **Note**: Parameters required in the process are as follow:
 >
 > - Validate time block is implemented.
->
 > - Validate time and format time-blocks accordingly.
->
-> - Retrieve information from localstorage to make data persist.
->
+> - Retrieve information from Local Storage (API) to make data persist.
 > - Enable or disable editor based on the status of the time-block; past, current or future.
 
 <!-- LICENSE Section -->
 
 ## Roadmap
 
-- [ X ] Folder Structure
-- [ X ] Styling
-- [ X ] Index Page
-- [ X ] Build logic - JavaScripts
-- [ X ] Write Technical and User Documentation
+- [x] Folder Structure
+- [x] Styling
+- [x] Index Page
+- [x] Build logic - JavaScripts
+- [x] Write Documentation
+  - [ ] Technical Information
+  - [ ] User Guide
 
 See the [open issues](https://github.com/gusmiller/work_day_scheduler/issues) for a full list of proposed features (and known issues). Note: Issues found have been left <strong>open</strong> on purpose for grading purposes.
 
