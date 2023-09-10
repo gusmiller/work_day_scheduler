@@ -32,12 +32,16 @@ $(document).ready(function () {
 		var index = searchData(data.key);
 
 		if (index == null) {
-			tasksRegistry.push(data); // Add new object to the local storage
+			// Add new object to the local storage
+			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
+			tasksRegistry.push(data); 
 		} else {
 			tasksRegistry[index].task = data.task;
 		}
 
 		// Window: localStorage property - data has no expiration time
+		// https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
+		// https://www.w3schools.com/Js/js_json_stringify.asp
 		localStorage.setItem(
 			"schedulerTasks",
 			JSON.stringify(tasksRegistry)
@@ -66,20 +70,33 @@ $(document).ready(function () {
 	 * The function returns a populates -or empty, array that may contain the tasks stored.
 	 */
 	function retrieveData() {
+
+		// Retrieve from local storage the Schedule Tasks and convert into object. We are 
+		// expecting an array
+		// https://www.w3schools.com/Js/js_json_parse.asp
+		// https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem
 		var tasks = JSON.parse(localStorage.getItem("schedulerTasks"));
 
 		if (tasks !== null) {
 			// Validate whether we have a single item or an array of objects
 			if (
+				// Prototypes are the mechanism by which JavaScript objects inherit features from one another.
+				// It helps me determine the type of object
+				// https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes
 				Object.prototype.toString.call(tasks) !==
 				"[object Array]"
 			) {
+				// Push task into array for further use
+				// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
 				tasksRegistry.push(tasks); // Initialize the tasks array
 			} else {
 				for (i = 0; i <= tasks.length - 1; i++) {
+					// Add task to public array - used in other processes.
+					// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
 					tasksRegistry.push(tasks[i]); // Add tasks into array
 
-					// Add task saved into the Day Scheduler
+					// Using JQuery children we access textares and add task retrieve from local storage
+					// https://api.jquery.com/children/
 					$("#" + tasks[i].key)
 						.children("textarea")
 						.val(tasks[i].task);
@@ -94,9 +111,10 @@ $(document).ready(function () {
 	 * performance issues but it is ok for now.
 	 */
 	function validateCurrent() {
-		var currentHour = dayjs().format("HH"); // This will retrieve the current hour
-		var newTimeFormatted = "newTime" + currentHour;
 
+		// This will retrieve the current hour and format it using DayJs library.
+		// https://day.js.org/docs/en/display/format
+		var currentHour = dayjs().format("HH"); 
 		var $parent = $("#timeBlockArea");
 
 		// Iterate through all elements in the timeBlockArea. I had  used a selector like this $(#timeBlockA > Section)
@@ -107,8 +125,13 @@ $(document).ready(function () {
 
 				var selectTimeBlock = $("#" + this.id); // Build the id in string
 				var text = selectTimeBlock.children().eq(0).text(); // Grab the time from children element
+
+				// This function arses the string argument and returns an integer
+				// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
 				var hour = parseInt(text.replace(":00", "")); // Remove the minutes format and convert into integer
 
+				// Reset color by removing classes that define the color of the timeBlock
+				// https://www.geeksforgeeks.org/how-to-add-or-remove-class-in-jquery/
 				selectTimeBlock.removeClass(
 					"past present future nonworking"
 				); // Get rid of classes
@@ -116,9 +139,7 @@ $(document).ready(function () {
 				// Re-assign the classes based on the time criteria; some hours are non-working hours, past, current
 				// and future hours. Note: requirement does not ask for non-working hours, but I put them for higher
 				// visualization of the day
-				if (+hour < startingTime || +hour >= endingTime) {
-					selectTimeBlock.addClass("nonworking");
-				} else if (+currentHour == hour) {
+				if (+currentHour == hour) {
 					selectTimeBlock.addClass("present");
 					disableItem = "";
 				} else if (
@@ -140,15 +161,18 @@ $(document).ready(function () {
 	 * it would not add; as the next row. Leave for later.
 	 */
 	function init() {
-		var newTimeBlock = $("#timeBlockTemplate").clone(); // Initial mechanism to create DOM - not successfull
 
-		var currentHour = dayjs().format("HH"); // This will retrieve the current hour
+		// This will retrieve the current hour and format it using DayJs library.
+		// https://day.js.org/docs/en/display/format
+		var currentHour = dayjs().format("HH"); 
 
 		// Iterate through the hours that would be included in the scheduler. We are using non-working hours
 		// only to demonstrate that we can handle them. This runs automatically when document is ready and it
 		// will start a timer to refresh when the current hour changes.
 		for (var hour = startingTime; hour < endingTime; hour++) {
-			var formattedHour = addLeadingZero(hour); // Intentionally done d
+
+			// Add leading zeros to the hour. Build time.
+			var formattedHour = addLeadingZero(hour); 
 			var time = formattedHour + ":00";
 			var newTimeFormatted = "newTime" + formattedHour;
 
@@ -157,9 +181,7 @@ $(document).ready(function () {
 			var disableItem = " disabled";
 			var statusTimeColor = "past";
 
-			if (+hour < startingTime || +hour >= endingTime) {
-				statusTimeColor = "nonworking";
-			} else if (+currentHour == hour) {
+			if (+currentHour == hour) {
 				statusTimeColor = "present";
 				disableItem = "";
 			} else if (hour > +currentHour && hour <= endingTime - 1) {
@@ -167,47 +189,32 @@ $(document).ready(function () {
 				disableItem = "";
 			} else {
 				//Uncomment next line to enable data entry on all past timeBlocks. For testing purposes.
-				disableItem = "";
+				//disableItem = "";
 			}
 
 			// Build HTML code using string and concatenating variables; slick but not the way I would
 			// like it. Line #62 contains the clone I had in mind, but was not implemented. Kept code for
 			// future implementations.
 			var htmlCode =
-				'<section id="' +
-				newTimeFormatted +
-				'" class="row time-block ' +
-				statusTimeColor +
-				'">' +
-				'<div class="col-2 col-md-1 hour text-center py-3">' +
-				time +
-				"</div>" +
-				'<textarea class="col-8 col-md-10 description" rows="3" ' +
-				disableItem +
-				"> </textarea>" +
-				'<button type="button" class="btn saveBtn col-2 col-md-1" aria-label="save"' +
-				disableItem +
-				">" +
-				'<i class="fas fa-save" aria-hidden="true"></i>' +
-				"</button>" +
+				'<section id="' + newTimeFormatted + '" class="row time-block ' + statusTimeColor + '">' +
+					'<div class="col-2 col-md-1 hour text-center py-3">' + time + "</div>" +
+					'<textarea class="col-8 col-md-10" rows="3" ' + disableItem + "> </textarea>" +
+					'<button type="button" class="btn saveBtn col-2 col-md-1" aria-label="save"' + disableItem + ">" +
+						'<i class="fas fa-save" aria-hidden="true"></i>' + 
+					"</button>" +
 				"</section>";
 
-			//$(htmlCode).insertAfter("#newTime" + insertLocation);
-			$(htmlCode).insertBefore("#anchor"); // Inserting before the anchor for the order of time
-			//$(htmlCode).append("#timeBlockArea")
-
-			// The following code, is kept for future implementations. It was intended to work in combination with
-			// the cloning on line #62.
-			//
-			// newTimeBlock.attr("id", newTimeFormatted); // Change id to unique
-			// newTimeBlock.children().eq(0).text(time); // Time to display
-			// newTimeBlock.insertAfter("#newTime" + insertLocation);
+			// Inserting before the anchor for the order of time
+			// https://developer.mozilla.org/en-US/docs/Web/API/Node/insertBefore
+			$(htmlCode).insertBefore("#anchor"); 
 		}
 
-		// Display the date on hero section
+		// Using DayJs library we display the date on hero section
+		// https://day.js.org/docs/en/display/format
 		$("#currentDay").text(dayjs().format("MMMM DD, YYYY"));
 
-		//Set an interval of 30 minutes to run this function
+		// Set an interval of 60 seconds to run this function
+		// https://developer.mozilla.org/en-US/docs/Web/API/setInterval
 		setInterval(validateCurrent, 60 * 1000);
 		retrieveData(); // This will call the function that retrieves data from LocalStorage
 
