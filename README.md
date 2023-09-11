@@ -9,11 +9,11 @@
 <p align="center">
     <a href="https://bootcamp.carleton.ca/">
         <img alt="Carleton University" src="https://img.shields.io/static/v1.svg?label=bootcamp&message=Carleton&color=blue" /></a>
-    <a href="" >
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions" >
         <img alt="JavaScript - Functions" src="https://img.shields.io/static/v1.svg?label=JavaScripts&message=functions&color=red" /></a>
-    <a href="" >
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" >
         <img alt="JavaScript - Functions" src="https://img.shields.io/static/v1.svg?label=JavaScripts&message=arrays&color=yellow" /></a>
-    <a href="" >
+    <a href="https://docs.github.com/en/actions/deployment/about-deployments/about-continuous-deployment" >
         <img alt="JavaScript - Prompts" src="https://img.shields.io/static/v1.svg?label=deployment&message=production&color=green" /></a>
     <a href="https://www.linkedin.com/in/gustavo-miller-42188481/">
         <img alt="LinkedIn Platforms" src="https://img.shields.io/static/v1.svg?label=linkedIn&message=linkedin&color=blue" />
